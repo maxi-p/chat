@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Websocket test</title>
+	
+	<script type="text/javascript">
+		var websocket = new WebSocket("ws://localhost:8080/encrypted-online-messenger.web/chatroomServerEndpoint");
+		websocket.onmessage = function processMessage(message){
+			var jsonData = JSON.parse(message.data);
+			if(jsonData.message != null) messangerTextArea.value +=jsonData.message + "\n";
+		}
+		
+		function sendMessage(){
+			websocket.send(messageText.value);
+			messageText.value = "";
+		}
+	
+	</script>
+</head>
+<body>
+	<textarea id="messangerTextArea" readonly="readonly" rows="10" cols="45"></textarea><br/>
+	<input type="text" id="messageText" size="50"/><input type="button" value="Send" onClick="sendMessage();"/>
+</body>
+</html>
